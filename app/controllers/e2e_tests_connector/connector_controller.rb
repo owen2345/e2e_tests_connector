@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'rspec/rails' if defined?(RSpec)
+require Rails.root.join('spec/rails_helper').to_s if defined?(RSpec)
+require 'database_cleaner/active_record' if defined?(DatabaseCleaner)
+
 module E2eTestsConnector
   class ConnectorController < ApplicationController
     def call
