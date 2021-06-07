@@ -10,17 +10,21 @@ jobs:
   build:
     name: Tests and Code Style
     runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: test
     strategy:
       fail-fast: false
       matrix:
         ruby: [2.4, 2.5, 2.6]
-        rails: [6]
+        rails: [5, 6]
         include:
           - ruby: 2.7
             rails: 6
-        exclude: # rails 6 requires ruby >= 2.5
-          - ruby: 2.4
+        exclude:
+          - ruby: 2.4 # rails 6 requires ruby >= 2.5
             rails: 6
+          - ruby: 2.4 # Factories not detected: Factory not registered: "user"
+            rails: 5
 
     steps:
       - uses: actions/checkout@v2
@@ -37,16 +41,16 @@ jobs:
           RAILS_V: ${{ matrix.rails }}
         run: |
           bundler_v='2.1.4'
+          rm -f Gemfile.lock
+          rm -f Gemfile
+          cp $GEMFILE_PATH ./Gemfile
           gem install bundler -v "~> $bundler_v"
           bundle _${bundler_v}_ install --jobs 4 --retry 3
 
+      - run: rails db:create && rails db:schema:load
       - name: Tests (rspec)
         run: |
           bundle exec rspec
-
-      - name: Setup tmate session (remote session debugger)
-        uses: mxschmitt/action-tmate@v3
-        if: always() && matrix.ruby == '2.4' && matrix.rails == 5
 
       - name: Code style (Rubocop)
         run: bundle exec rubocop
