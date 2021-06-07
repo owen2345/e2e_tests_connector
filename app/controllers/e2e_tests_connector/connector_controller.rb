@@ -8,7 +8,7 @@ module E2eTestsConnector
         run_reset_db
       when 'factory'
         run_factory
-      when 'init_default_mocks'
+      when 'init_custom_mocks'
         init_custom_mocks
       else
         run_command

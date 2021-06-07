@@ -62,7 +62,7 @@ RSpec.describe E2eTestsConnector::ConnectorController, type: :controller do
   end
 
   describe 'when initializing custom mocks' do
-    let(:kind) { :init_default_mocks }
+    let(:kind) { :init_custom_mocks }
 
     it 'initializes custom mocks' do
       callback = E2eTestsConnector::Config.init_custom_mocks

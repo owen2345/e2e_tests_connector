@@ -1,25 +1,27 @@
 # E2eTestsConnector
-Short description and motivation.
+
 
 ## Usage
-How to use my plugin.
+This gem permits to connect frontend apps like react, angular, etc with backend rails apps to run end to end tests using libraries like [cypress](https://www.cypress.io/)
 
 ## Installation
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'e2e_tests_connector'
+group :test do
+  gem 'e2e_tests_connector'
+end
 ```
 
 And then execute:
 ```bash
-$ bundle
+$ bundle install
 ```
 
-Or install it yourself as:
-```bash
-$ gem install e2e_tests_connector
-```
+## Frontend Integration
+- Copy `docs/backend_connector.ts` into `cypress/support/` 
+- Import the connector in `cypress/support/index.js`
+  `import './backend_connector';`
 
 ## Troubleshooting
 - `uninitialized constant E2eTestsConnector::Config::DatabaseCleaner`
