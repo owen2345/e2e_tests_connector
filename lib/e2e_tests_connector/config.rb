@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rspec/rails' if defined?(RSpec)
-require './spec/rails_helper' if defined?(RSpec)
+require_relative '../../spec/rails_helper' if defined?(RSpec)
 require 'database_cleaner/active_record' if defined?(DatabaseCleaner)
 
 module E2eTestsConnector

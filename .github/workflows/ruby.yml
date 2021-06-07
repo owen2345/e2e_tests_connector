@@ -1,0 +1,53 @@
+name: Ruby Gem
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    name: Tests and Code Style
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: [2.4, 2.5, 2.6]
+        rails: [6]
+        include:
+          - ruby: 2.7
+            rails: 6
+        exclude: # rails 6 requires ruby >= 2.5
+          - ruby: 2.4
+            rails: 6
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install sqlite3
+        run: sudo apt-get install libsqlite3-dev
+
+      - name: Install bundler
+        env:
+          GEMFILE_PATH: gemfiles/Gemfile_${{ matrix.rails }}
+          RAILS_V: ${{ matrix.rails }}
+        run: |
+          bundler_v='2.1.4'
+          gem install bundler -v "~> $bundler_v"
+          bundle _${bundler_v}_ install --jobs 4 --retry 3
+
+      - name: Tests (rspec)
+        run: |
+          bundle exec rspec
+
+      - name: Setup tmate session (remote session debugger)
+        uses: mxschmitt/action-tmate@v3
+        if: always() && matrix.ruby == '2.4' && matrix.rails == 5
+
+      - name: Code style (Rubocop)
+        run: bundle exec rubocop
+        if: matrix.ruby == '2.6' && matrix.rails == '6'
