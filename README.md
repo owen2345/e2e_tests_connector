@@ -21,6 +21,14 @@ Or install it yourself as:
 $ gem install e2e_tests_connector
 ```
 
+## Troubleshooting
+- `uninitialized constant E2eTestsConnector::Config::DatabaseCleaner`
+  Require the corresponding library in `spec/spec_helper.rb`
+  ```ruby
+    require 'factory_bot_rails' # OR
+    require 'database_cleaner/active_record'
+  ```
+
 ## Contributing
 Contribution directions go here.
 
