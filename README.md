@@ -1,7 +1,8 @@
 # E2eTestsConnector
+![Rails 4+](https://img.shields.io/badge/Rails-4+-success.png)
+![Ruby 2.4+](https://img.shields.io/badge/Ruby-2.4+-success.png)
+![Production ready](https://img.shields.io/badge/Production-ready-success.png)
 
-
-## Usage
 This gem permits to connect frontend apps like react, angular, etc with backend rails apps to run end to end tests using libraries like [cypress](https://www.cypress.io/)
 
 ## Backend Installation
