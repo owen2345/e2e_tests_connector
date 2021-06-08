@@ -45,5 +45,5 @@ Cypress.Commands.add('resetDb', () => cy.serverCommand('reset_db', ''));
 Cypress.Commands.add('initCustomMocks', () => cy.serverCommand('init_custom_mocks', ''));
 
 //********* SETUP INITIALIZATIONS
-beforeEach(() => cy.resetDb());
-before(() => cy.initCustomMocks());
+beforeEach(() => cy.resetDb()); // reset database for each test
+before(() => cy.initCustomMocks()); // init custom e2e mocks before running tests
